@@ -3,7 +3,7 @@
 services:
 
   springboot:
-    build: .
+    image: ghcr.io/riyabhunia2024-tech/spring-boot:latest
     container_name: springboot
     ports:
       - "8080:8080"
