@@ -1,0 +1,29 @@
+
+
+services:
+
+  springboot:
+    build: .
+    container_name: springboot
+    ports:
+      - "8080:8080"
+
+    healthcheck:
+     test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+     interval: 30s
+     timeout: 10s
+     retries: 5
+     start_period: 40s
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+    depends_on:
+      - springboot
