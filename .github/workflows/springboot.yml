@@ -44,7 +44,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u riyabhunia2024-tech --password-stdin
+            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u riyabhunia2024-tech --password-stdin
 
             docker pull ghcr.io/riyabhunia2024-tech/spring-boot:latest
 
