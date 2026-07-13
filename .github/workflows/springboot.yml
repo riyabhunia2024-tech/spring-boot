@@ -31,21 +31,21 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE_NAME }}:latest
-
-  # deploy:
-    # needs: build-and-push
-    # runs-on: ubuntu-latest
-
-    # steps:
-      # - name: Deploy to EC2 over SSH
-        # uses: appleboy/ssh-action@v1.0.3
-        # with:
-          # host: ${{ secrets.EC2_HOST }}
-          # username: ubuntu
-          # key: ${{ secrets.EC2_SSH_KEY }}
-          # script: |
-            # sudo docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-            # sudo docker pull ghcr.io/riyabhunia2024-tech/my-springboot-app:latest
-            # sudo docker stop springboot-app || true
-            # sudo docker rm springboot-app || true
-            # sudo docker run -d -p 8080:80 --name springboot-app ghcr.io/riyabhunia2024-tech/my-springboot-app:latest
+# 
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+# 
+    steps:
+      - name: Deploy to EC2 over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+            sudo docker pull ghcr.io/riyabhunia2024-tech/my-springboot-app:latest
+            sudo docker stop springboot-app || true
+            sudo docker rm springboot-app || true
+            sudo docker run -d -p 8080:80 --name springboot-app ghcr.io/riyabhunia2024-tech/my-springboot-app:latest
