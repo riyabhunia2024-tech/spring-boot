@@ -1,27 +1,27 @@
-# Stage 1 : Build
-
-FROM maven:3.9.9-eclipse-temurin-21 AS builder
+# ---------- Stage 1: Build the Spring Boot app ----------
+FROM maven:3.9-eclipse-temurin-17 AS build
 
 WORKDIR /app
-
-COPY . .
-
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+COPY src ./src
 RUN mvn clean package -DskipTests
 
+# ---------- Stage 2: Final image with Java + Nginx + Supervisor ----------
+FROM eclipse-temurin:17-jre-alpine
 
-
-# Stage 2 : Run
-
-FROM eclipse-temurin:21-jre
+RUN apk add --no-cache nginx supervisor
 
 WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 
-RUN apt-get update && \
-    apt-get install -y curl && \
-    rm -rf /var/lib/apt/lists/*
+# Nginx config - proxies port 80 -> Spring Boot on 8080
+COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=builder /app/target/*.jar app.jar
+# Supervisor config - runs both nginx and java together
+COPY supervisord.conf /etc/supervisord.conf
 
-EXPOSE 8080
+EXPOSE 80
 
-ENTRYPOINT ["java","-jar","app.jar"]
+CMD ["supervisord", "-c", "/etc/supervisord.conf"]
+

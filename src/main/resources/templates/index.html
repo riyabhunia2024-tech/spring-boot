@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Spring Boot Application</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🚀 Spring Boot Application</h1>
+
+    <p class="subtitle">
+        Deployed with Docker, Nginx & GitHub Actions CI/CD
+    </p>
+
+    <div class="status">
+        Running
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>☕ Spring Boot</h2>
+
+            <p>
+                Backend powered by Java 21 and embedded Tomcat.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>🐳 Docker</h2>
+
+            <p>
+                Multi-stage Docker build for lightweight production image.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>🌐 Nginx</h2>
+
+            <p>
+                Reverse proxy handling incoming traffic on port 80.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>⚙ GitHub Actions</h2>
+
+            <p>
+                Automatically builds Docker image and deploys to EC2.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>☁ AWS EC2</h2>
+
+            <p>
+                Hosting the Docker containers with secure SSH deployment.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>📦 GHCR</h2>
+
+            <p>
+                Docker images stored in GitHub Container Registry.
+            </p>
+        </div>
+
+    </div>
+
+    <footer>
+
+        Built & Deployed by
+        <strong>Riya Bhunia</strong>
+
+    </footer>
+
+</div>
+
+</body>
+</html>
